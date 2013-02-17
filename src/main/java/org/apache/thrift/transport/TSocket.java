@@ -19,6 +19,7 @@
 
 package org.apache.thrift.transport;
 
+import org.apache.thrift.tor.BuildAnonConn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,11 +114,14 @@ public class TSocket extends TIOStreamTransport {
    * Initializes the socket object
    */
   private void initSocket() {
+
     socket_ = new Socket();
     try {
       socket_.setSoLinger(false, 0);
       socket_.setTcpNoDelay(true);
       socket_.setSoTimeout(timeout_);
+        //[HERE]
+        System.out.println("Creating Socket... initSocket() @ TSocket.java");
     } catch (SocketException sx) {
       LOGGER.error("Could not configure socket.", sx);
     }
@@ -177,6 +181,9 @@ public class TSocket extends TIOStreamTransport {
     }
 
     try {
+      // Overloads sockets to use TOR.
+      BuildAnonConn.useTor();
+
       socket_.connect(new InetSocketAddress(host_, port_), timeout_);
       inputStream_ = new BufferedInputStream(socket_.getInputStream(), 1024);
       outputStream_ = new BufferedOutputStream(socket_.getOutputStream(), 1024);

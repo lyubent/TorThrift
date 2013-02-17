@@ -121,6 +121,8 @@ public abstract class AbstractNonblockingServer extends TServer {
   protected boolean startListening() {
     try {
       serverTransport_.listen();
+        //[HERE]
+        System.out.println("STARTED LISTENING @ AbstractNonblockingServer.java");
       return true;
     } catch (TTransportException ttx) {
       LOGGER.error("Failed to start listening on server socket!", ttx);

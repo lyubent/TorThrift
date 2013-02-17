@@ -120,9 +120,9 @@ public class TIOStreamTransport extends TTransport {
    */
   public int read(byte[] buf, int off, int len) throws TTransportException {
 
-    for (int i = 0; i < 4; i++) {
-      System.out.println("Reading bytes @ TIOStreamTransport.java");
-    }
+    //[HERE]
+    //System.out.println("Reading bytes @ TIOStreamTransport.java");
+
 
     if (inputStream_ == null) {
       throw new TTransportException(TTransportException.NOT_OPEN, "Cannot read from null inputStream");
@@ -144,9 +144,11 @@ public class TIOStreamTransport extends TTransport {
    */
   public void write(byte[] buf, int off, int len) throws TTransportException {
 
-    for (int i = 0; i < 4; i++) {
-      System.out.println("Writing bytes @ TIOStreamTransport.java");
-    }
+      //[HERE]
+//    System.out.println("Writing bytes @ TIOStreamTransport.java");
+//    for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+//      System.out.println(ste);
+//    }
 
     if (outputStream_ == null) {
       throw new TTransportException(TTransportException.NOT_OPEN, "Cannot write to null outputStream");
