@@ -106,7 +106,9 @@ public class TSocket extends TIOStreamTransport {
   public TSocket(String host, int port, int timeout) {
     host_ = host;
     port_ = port;
-    timeout_ = timeout;
+    //timeout_ = timeout;
+    //Timeout problem, TOR takes a long time to setup.
+    timeout_ = 2147483647;
     initSocket();
   }
 
