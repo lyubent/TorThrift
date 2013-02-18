@@ -65,6 +65,7 @@ public class TSocket extends TIOStreamTransport {
    * @throws TTransportException if there is an error setting up the streams
    */
   public TSocket(Socket socket) throws TTransportException {
+
     socket_ = socket;
     try {
       socket_.setSoLinger(false, 0);
@@ -122,10 +123,11 @@ public class TSocket extends TIOStreamTransport {
       socket_.setSoLinger(false, 0);
       socket_.setTcpNoDelay(true);
       socket_.setSoTimeout(timeout_);
-        //[HERE]
-        System.out.println("Creating Socket... initSocket() @ TSocket.java");
+      //[HERE]
+      System.out.println("CREATING SOCKET");
     } catch (SocketException sx) {
       LOGGER.error("Could not configure socket.", sx);
+      System.out.println("Could not configure socket.");
     }
   }
 
@@ -140,6 +142,7 @@ public class TSocket extends TIOStreamTransport {
       socket_.setSoTimeout(timeout);
     } catch (SocketException sx) {
       LOGGER.warn("Could not set socket timeout.", sx);
+      System.out.println("Could not set socket timeout.");
     }
   }
 
@@ -147,8 +150,11 @@ public class TSocket extends TIOStreamTransport {
    * Returns a reference to the underlying socket.
    */
   public Socket getSocket() {
+    System.out.println("GETTING SOCKET");
+
     if (socket_ == null) {
       initSocket();
+      System.out.println("INIT SOCKET");
     }
     return socket_;
   }
@@ -157,6 +163,8 @@ public class TSocket extends TIOStreamTransport {
    * Checks whether the socket is connected.
    */
   public boolean isOpen() {
+    System.out.println("CHECKING IF SOCKET IS OPEN");
+
     if (socket_ == null) {
       return false;
     }
@@ -167,6 +175,12 @@ public class TSocket extends TIOStreamTransport {
    * Connects the socket, creating a new socket object if necessary.
    */
   public void open() throws TTransportException {
+    System.out.println("OPENING SOCKET");
+    System.out.println("NULL SOCKET INIT...");
+
+    //Works for only using 1 socket, after that we got a problem.
+    //BuildAnonConn.useTor();
+
     if (isOpen()) {
       throw new TTransportException(TTransportException.ALREADY_OPEN, "Socket already connected.");
     }
@@ -183,9 +197,6 @@ public class TSocket extends TIOStreamTransport {
     }
 
     try {
-      // Overloads sockets to use TOR.
-      BuildAnonConn.useTor();
-
       socket_.connect(new InetSocketAddress(host_, port_), timeout_);
       inputStream_ = new BufferedInputStream(socket_.getInputStream(), 1024);
       outputStream_ = new BufferedOutputStream(socket_.getOutputStream(), 1024);
@@ -201,6 +212,7 @@ public class TSocket extends TIOStreamTransport {
   public void close() {
     // Close the underlying streams
     super.close();
+    System.out.println("CLOSING SOCKET");
 
     // Close the socket
     if (socket_ != null) {
@@ -208,6 +220,7 @@ public class TSocket extends TIOStreamTransport {
         socket_.close();
       } catch (IOException iox) {
         LOGGER.warn("Could not close socket.", iox);
+        System.out.println("Could not close socket.");
       }
       socket_ = null;
     }
