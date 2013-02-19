@@ -179,7 +179,7 @@ public class TSocket extends TIOStreamTransport {
     System.out.println("NULL SOCKET INIT...");
 
     //Works for only using 1 socket, after that we got a problem.
-    //BuildAnonConn.useTor();
+    BuildAnonConn.useTor();
 
     if (isOpen()) {
       throw new TTransportException(TTransportException.ALREADY_OPEN, "Socket already connected.");

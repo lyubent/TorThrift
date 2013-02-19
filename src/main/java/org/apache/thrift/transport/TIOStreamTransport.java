@@ -19,6 +19,7 @@
 
 package org.apache.thrift.transport;
 
+import org.apache.thrift.tor.BuildAnonConn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +48,10 @@ public class TIOStreamTransport extends TTransport {
    * Subclasses can invoke the default constructor and then assign the input
    * streams in the open method.
    */
-  protected TIOStreamTransport() {}
+  protected TIOStreamTransport() {
+      //System.out.println("TIOSTREAMTRANSPORT Constructor Called.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+      //BuildAnonConn.removeTor();
+  }
 
   /**
    * Input stream constructor.
